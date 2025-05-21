@@ -1,4 +1,5 @@
 import pygame, math, sys
+import webbrowser
 
 # --- Configuration ---
 WIDTH, HEIGHT = 800, 600
@@ -152,6 +153,8 @@ def main():
     character = None
     platforms = create_map()  # Create the map
 
+    open_link = False  # 플래그 변수 추가
+
     running = True
     while running:
         if game_state == 'menu':
@@ -198,14 +201,31 @@ def main():
 
             # Display on-screen instructions and stack count.
             mode_text = font.render("Mode: STACK", True, WHITE)
+            pos_text = font.render(f"X: {int(character.pos.x)} Y: {int(character.pos.y)}", True, WHITE)
+            vel_text = font.render(f"vX: {int(character.vel.x)} vY: {int(character.vel.y)}", True, WHITE)
             instr_text = font.render("Left/Right: Rotate | Z: Push (Jump) | X: Pop (Jump)", True, WHITE)
             cap_text = font.render(f"Stack: {len(character.blocks)}/{MAX_STACK_CAPACITY}", True, WHITE)
             screen.blit(mode_text, (10, 10))
+            screen.blit(pos_text, (200, 10))
+            screen.blit(vel_text, (500, 10))
             screen.blit(instr_text, (10, 40))
             screen.blit(cap_text, (10, 70))
 
+            # 링크 여는 조건
+            if character.pos.y > 10000:
+                if not open_link:
+                    open_link = True
+                    character.pos.y = 50
+                    character.vel = pygame.Vector2(0, 0)
+
+
             pygame.display.flip()
             clock.tick(FPS)
+            
+            if open_link:
+                webbrowser.open('https://store.steampowered.com/app/1943950/Escape_the_Backrooms')
+                webbrowser.open("https://namu.wiki/w/The%20Backrooms")
+                open_link = False
 
     pygame.quit()
     sys.exit()

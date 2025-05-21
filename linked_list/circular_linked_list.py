@@ -62,6 +62,7 @@ if __name__ == '__main__':
     c.insert(30)
     c.print_list()
     print('First item:', c.first())
+    print(c.last.item)
     c.delete()
     c.print_list()
     c.delete()
