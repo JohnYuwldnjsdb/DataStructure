@@ -12,8 +12,9 @@ class QuadraticProbing:
         initial_position = self.hash(key)
         i = initial_position
         j = 0
+        loop_limit = 20
         
-        while True:
+        while True and loop_limit > 0:
             if self.a[i] == None:
                 self.a[i] = key
                 self.d[i] = data
@@ -26,16 +27,14 @@ class QuadraticProbing:
             
             j += 1
             i = (initial_position + j*j) % self.M
-            
-            if self.N > self.M:
-                break
     
     def get(self, key):
         initial_position = self.hash(key)
         i = initial_position
         j = 0
+        loop_limit = 20
         
-        while self.a[i] != None:
+        while self.a[i] != None and loop_limit > 0:
             if self.a[i] == key:
                 return self.d[i]
             

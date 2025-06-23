@@ -1,5 +1,3 @@
-import random
-
 class DoubleHashing:
     def __init__(self, size):
         self.M = size
@@ -15,10 +13,9 @@ class DoubleHashing:
         i = initial_position
         d = 7 - (key % 7)
         j = 0
+        loop_limit = 20
         
-        random.seed(1000)
-        
-        while True:
+        while True and loop_limit > 0:
             if self.a[i] == None:
                 self.a[i] = key
                 self.d[i] = data
@@ -31,17 +28,15 @@ class DoubleHashing:
             
             j += 1
             i = (initial_position + j*d) % self.M
-            
-            if self.N > self.M:
-                break
     
     def get(self, key):
         initial_position = self.hash(key)
         i = initial_position
         d = 7 - (key % 7)
         j = 0
+        loop_limit = 20
         
-        while self.a[i] != None:
+        while self.a[i] != None and loop_limit > 0:
             if self.a[i] == key:
                 return self.d[i]
             

@@ -94,7 +94,7 @@ class AVL:
             if n.left == None:
                 return n.right
             target = n
-            n = self.get_min(target.right) # 오른쪽 자식 최댓값
+            n = self.get_min(target.right) # 오른쪽 자식 최솟값
             n.right = self.del_min(target.right) # target의 오른쪽 자식을 n의 오른쪽 자식으로 설정 -> 두 트리 간섭 X
             n.left = target.left # target의 왼쪽 자식을 n의 왼쪽 자식으로 설정
         n.height = max(self.height(n.left), self.height(n.right)) + 1

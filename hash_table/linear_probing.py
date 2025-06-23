@@ -40,8 +40,8 @@ class LinearProbing:
             j += 1
             i = (initial_position + j) % self.M
             
-            if (i == initial_position):
-                return None
+            if i == initial_position:
+                break
         
         return None
     
