@@ -39,8 +39,8 @@ class AVL:
 
         if n.key > key:
             n.left = self.put_item(n.left, key, value)
-        elif n.key > key:
-            n.left = self.put_item(n.right, key, value)
+        elif n.key < key:
+            n.right = self.put_item(n.right, key, value)
         else:
             n.value = value
             return n
@@ -60,7 +60,7 @@ class AVL:
         return n
     
     def bf(self, n):
-        pass
+        return self.height(n.left) - self.height(n.right)
 
     def rotate_right(self, n):
         x = n.left
@@ -79,12 +79,70 @@ class AVL:
         return x
     
     def delete(self, key):
-        pass
+        self.root = self.del_node(self.root, key)
 
-    def delete_min(self):
-        pass
+    def del_node(self, n, k):
+        if n == None:
+            return None
+        if n.key > k:
+            n.left = self.del_node(n.left, k)
+        elif n.key < k:
+            n.right = self.del_node(n.right, k)
+        else:
+            if n.right == None:
+                return n.left
+            if n.left == None:
+                return n.right
+            target = n
+            n = self.get_min(target.right) # 오른쪽 자식 최댓값
+            n.right = self.del_min(target.right) # target의 오른쪽 자식을 n의 오른쪽 자식으로 설정 -> 두 트리 간섭 X
+            n.left = target.left # target의 왼쪽 자식을 n의 왼쪽 자식으로 설정
+        n.height = max(self.height(n.left), self.height(n.right)) + 1
+        return self.balance(n)
     
-    def min(self):
-        pass
+    def del_min(self, n):
+        if n.left == None:
+            return n.right
+        n.left = self.del_min(n.left)
+        n.height = max(self.height(n.left), self.height(n.right)) + 1
+        return self.balance(n)
 
-t = AVL()
+    def get_min(self, n):
+        if n.left == None:
+            return n
+        return self.get_min(n.left)
+    
+    def preorder(self, n): # 전위순회
+        print(str(n.key),' ', end='')
+        if n.left:
+            self.preorder(n.left)
+        if n.right:
+            self.preorder(n.right)
+
+    def inorder(self, n): # 중위순회
+        if n.left:
+            self.inorder(n.left)
+        print(str(n.key), ' ', end='')
+        if n.right:
+            self.inorder(n.right)
+
+if __name__ == '__main__':
+    t = AVL()
+    t.put(80, 'A')
+    t.put(85, 'B')
+    t.put(20, 'C')
+    t.put(10, 'D')
+    t.put(50, 'E')
+    t.put(30, 'F')
+
+    print('전위순회:', end='')
+    t.preorder(t.root)
+    print('\n중위순회:', end='')
+    t.inorder(t.root)
+    print('\n80와 50 삭제 후:')
+    t.delete(80)
+    t.delete(50)
+    print('전위순회:', end='')
+    t.preorder(t.root)
+    print('\n중위순회:', end='')
+    t.inorder(t.root)

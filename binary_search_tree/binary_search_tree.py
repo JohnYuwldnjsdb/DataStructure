@@ -35,24 +35,13 @@ class BST:
         elif n.key < key:
             n.right = self.put_item(n.right, key, value)
         else:
-            n.value = value
+            n.item = value
         return n
-    
-    def min(self):
-        if self.root == None:
-            return None
-        return self.get_min(self.root)
     
     def get_min(self, n):
         if n.left == None:
             return n
         return self.get_min(n.left)
-    
-    def delete_min(self):
-        if self.root == None:
-            print("Deletion attempted on a blank tree")
-            return
-        self.del_min(self.root)
     
     def del_min(self, n):
         if n.left == None:
@@ -61,7 +50,7 @@ class BST:
         return n
     
     def delete(self, k):
-        self.del_node(self.root, k)
+        self.root = self.del_node(self.root, k)
     
     def del_node(self, n, k):
         if n == None:
