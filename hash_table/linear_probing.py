@@ -3,7 +3,7 @@ class LinearProbing:
         self.M = size
         self.a = [None] * size
         self.d = [None] * size
-    
+
     def hash(self, key):
         return key % self.M
 

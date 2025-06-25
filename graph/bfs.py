@@ -13,7 +13,7 @@ def bfs():
             if not visited[child]:
                 visited[child] = True
                 que.append(child)
-        
+
 que = deque()
 
 for i in range(len(adj_list)):

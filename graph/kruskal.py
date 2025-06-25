@@ -18,12 +18,17 @@ def union(u, v):
 
 mst = []
 cost = 0
+size = 0
 
 for w in weights:
     if find(w[0]) != find(w[1]):
         union(w[0], w[1])
         mst.append(w[:2])
         cost += w[2]
+        size += 1
+        
+        if size == 7:
+            break
 
 print("MST:", *mst)
 print("Cost:", cost)
