@@ -103,7 +103,7 @@ class AVL:
     def del_min(self, n):
         if n.left == None:
             return n.right
-        n.left = self.del_min(n.left)
+        n.left = self.del_min(n.left)   
         n.height = max(self.height(n.left), self.height(n.right)) + 1
         return self.balance(n)
 
